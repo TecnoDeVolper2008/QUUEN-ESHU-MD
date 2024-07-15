@@ -1,6 +1,13 @@
-FROM quay.io/hermit/hermit-ser:latest
+FROM node:18.16.0-bullseye-slim
 
-RUN git clone https://github.com/A-d-i-t-h-y-a-n/hermit-md /root/hermit-md
-WORKDIR /root/hermit-md/
-RUN yarn install --network-concurrency 1
+RUN apt-get update && \
+    apt-get install -y \
+    ffmpeg \
+    webp && \
+    apt-get upgrade -y && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/X-Electra/X-Asena.git /xasena
+WORKDIR /xasena
+RUN npm install
 CMD ["node", "index.js"]
